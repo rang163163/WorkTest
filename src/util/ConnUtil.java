@@ -10,9 +10,9 @@ public class ConnUtil {
       
 	private ConnUtil(){}
 	private static String driver="com.mysql.jdbc.Driver";
-	private static String url="jdbc:mysql://localhost:3306/user";
+	private static String url="jdbc:mysql://localhost:3306/pms";
 	private static String user="root";
-	private static String password="123";
+	private static String password="123456";
 	static{
 		
 		try {

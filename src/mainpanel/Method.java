@@ -20,7 +20,7 @@ public class Method {
 		conn=ConnUtil.getConnection();
 		try {
 			stm=conn.createStatement();
-			String sql1="select * from user where name='"+u.getName()+"'";
+			String sql1="select * from userinfo where name='"+u.getName()+"'";
 			
 			rs=stm.executeQuery(sql1);
 			if(rs.next()){
@@ -29,7 +29,7 @@ public class Method {
 			}
 			else
 			{
-				String sql = "insert into user(name,pw) values('"+u.getName()+"','"+u.getPw()+"')";
+				String sql = "insert into userinfo(name,phone,sex,password,address)"+" values('"+u.getName()+"','"+u.getPhone()+"','"+u.getSex()+"','"+u.getPassword()+"','"+u.getAddress()+"')";
 				result = stm.executeUpdate(sql);
 			}
 			
@@ -55,7 +55,7 @@ public class Method {
 		try{
 			conn = ConnUtil.getConnection();
 			stm = conn.createStatement();
-			String sql="update user set name='"+u.getName()+"' where pw='"+u.getPw()+"'";
+			String sql="update userinfo set name='"+u.getName()+"' where phone='"+u.getPhone()+"'";
 			
 			result = stm.executeUpdate(sql);
 		}catch(Exception ex){
@@ -78,14 +78,11 @@ public class Method {
 		Statement stm = null;
 		ResultSet rs=null;
 		conn = ConnUtil.getConnection();
-		  
-			
-				
-				
+
 					try{
 						
 						stm = conn.createStatement();
-						String sql = "delete from user where name='"+u.getName()+"' and pw='"+u.getPw()+"'";
+						String sql = "delete from userinfo where name='"+u.getName()+"' and phone='"+u.getPhone()+"'";
 						result = stm.executeUpdate(sql);
 			           
 					}catch(Exception ex){
@@ -104,7 +101,7 @@ public class Method {
 			
 		return result;
 	}
-	public static User getUserById(int id) {
+	public static User getUserById(String phone) {
 		User user = null;
 		
 		Connection conn = null;
@@ -114,13 +111,14 @@ public class Method {
 		try {
 			conn = ConnUtil.getConnection();
 			stm = conn.createStatement();
-			String sql = "select * from user where id="+id;
+			String sql = "select * from userinfo where phone="+phone;
 			rs = stm.executeQuery(sql);
 			if(rs.next()) {
 				user = new User();
-				user.setId(rs.getInt("id"));
+				user.setPhone(rs.getString("phone"));
 				user.setName(rs.getString("name"));
-				user.setPw(rs.getString("pw"));
+				user.setSex(rs.getString("sex"));
+				user.setAddress(rs.getString("address"));
 				
 			}
 			

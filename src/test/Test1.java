@@ -72,12 +72,9 @@ public static void main(String[] args) {
          		  int i=100;
          		 
          		  if(result==0){
-         			 {
-         				
-         				
+         			 {        								
          				  try {
-             				  
-             				  
+             				 			 
      							t1.sleep(3000);
      							System.exit(0);;
      							
@@ -90,8 +87,7 @@ public static void main(String[] args) {
          			  }
          			  
          		  }
-         		  
-         		
+         		          		
          	  }
                
            }

@@ -75,7 +75,7 @@ public class LoginPanel1 extends JPanel {
 		j2 = new JLabel("手机号：");
 		j3 = new JLabel("地址   ：");
 		j4 = new JLabel("性别   ：");
-		j5 = new JLabel("地址   ：");
+		j5 = new JLabel("密码   ：");
 		jt1 = new JTextField(10);
 		jt2 = new JTextField(10);
 		jt3 = new JTextField(10);
@@ -191,7 +191,7 @@ public class LoginPanel1 extends JPanel {
 														.getValueAt(row, 1);
 												User u=new User();
 												u.setName(s1);
-												u.setPw(s2);
+												u.setPhone(s2);
 												mainpanel.Method m=new mainpanel.Method();
 												try {
 
@@ -209,12 +209,18 @@ public class LoginPanel1 extends JPanel {
 										System.out.println("asd");
 										System.out.println(jt1.getText());
 										String user = jt1.getText();
-										String pw = jt2.getText();
+										String phone = jt2.getText();
+										String sex=jt3.getText();
+										String address=jt4.getText();
+										String password=jt5.getText();
 										User u = new User();
 										System.out.println(user);
 										u.setName(jt1.getText());
-										u.setPw(jt2.getText());
-
+										u.setPhone(jt2.getText());
+										u.setSex(jt3.getText());
+										u.setAddress(jt4.getText());
+										u.setPassword(jt5.getText());
+										
 										mainpanel.Method m=new mainpanel.Method();
 										try {
 
@@ -224,7 +230,6 @@ public class LoginPanel1 extends JPanel {
 											// TODO Auto-generated catch block
 
 										}
-
 									}
 
 								} else {
@@ -278,18 +283,22 @@ public class LoginPanel1 extends JPanel {
 
 				// 获得内容中间容器
 
-				String user = jt1.getText();
-				String pw = jt2.getText();
+				String name = jt1.getText();
+				String phone = jt2.getText();
+				String sex=jt3.getText();
+				String address=jt4.getText();
+				String password=jt5.getText();
+				
 
-				System.out.println(user);
+				System.out.println(name);
 
-				String[] colName1 = { "姓名", "密码" };
+				String[] colName1 = { "姓名", "手机号" ,"性别","地址","密码"};
 				DefaultTableModel dt = new DefaultTableModel(colName1, 0);
-				List<User> list = getList(user, pw);
+				List<User> list = getList(name, phone,sex,address,password);
 				for (User u : list) {
 					JRadioButton r = new JRadioButton();
 					dt.addRow(new String[] { (String) u.getName(),
-							(String) u.getPw() });
+							(String) u.getPhone(),(String) u.getSex(),(String)u.getAddress(),(String)u.getPassword() });
 
 				}
 
@@ -345,12 +354,18 @@ public class LoginPanel1 extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 
-				String user = jt1.getText();
-				String pw = jt2.getText();
+				String name = jt1.getText();
+				String phone = jt2.getText();
+				String sex=jt3.getText();
+				String address=jt4.getText();
+				String password=jt5.getText();
 				User u = new User();
-				System.out.println(user);
+				System.out.println(name);
 				u.setName(jt1.getText());
-				u.setPw(jt2.getText());
+				u.setPhone(jt2.getText());
+				u.setAddress(jt4.getText());
+				u.setSex(jt3.getText());
+				u.setPassword(jt5.getText());
 
 				mainpanel.Method m=new mainpanel.Method();
 				m.updateUser(u);
@@ -362,12 +377,18 @@ public class LoginPanel1 extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 
-				String user = jt1.getText();
-				String pw = jt2.getText();
+				String name = jt1.getText();
+				String phone = jt2.getText();
+				String sex=jt3.getText();
+				String address=jt4.getText();
+				String password=jt5.getText();
 				User u = new User();
-				System.out.println(user);
+				System.out.println(name);
 				u.setName(jt1.getText());
-				u.setPw(jt2.getText());
+				u.setPhone(jt2.getText());
+				u.setAddress(jt4.getText());
+				u.setSex(jt3.getText());
+				u.setPassword(jt5.getText());
 
 				mainpanel.Method m=new mainpanel.Method();
 				m.addUser(u);
@@ -404,8 +425,7 @@ public class LoginPanel1 extends JPanel {
 		jtime.setBounds(0,400, 150, 100);
 		add(jtime);
 	}
-
-	public static ArrayList<User> getList(String name, String password) {
+	public static ArrayList<User> getList(String name, String phone,String sex,String address,String password) {
 		ArrayList<User> list = new ArrayList<User>();
 		System.out.println(name);
 		User u = null;
@@ -416,21 +436,29 @@ public class LoginPanel1 extends JPanel {
 		try {
 			conn = ConnUtil.getConnection();
 			stm = conn.createStatement();
-			String sql = "select * from user where 1=1";
+			String sql = "select * from userinfo where 1=1";
 
 			if (!(name == null || "".equals(name))) {
 				sql += " and name like '%" + name + "%' ";
 			}
-			if (!(password == null || "".equals(password))) {
-				sql += " and pw like '%" + password + "%' ";
+			if (!(sex == null || "".equals(sex))) {
+				sql += " and sex like '%" + sex + "%' ";
 			}
-
+			if (!(phone == null || "".equals(phone))) {
+				sql += " and phone like '%" + phone + "%' ";
+			}
+			if (!(address == null || "".equals(address))) {
+				sql += " and address like '%" + address + "%' ";
+			}
+			
 			rs = stm.executeQuery(sql);
 			while (rs.next()) {
 				u = new User();
-				u.setId(rs.getInt("id"));
+				u.setSex(rs.getString("sex"));
 				u.setName(rs.getString("name"));
-				u.setPw(rs.getString("pw"));
+				u.setPhone(rs.getString("phone"));
+				u.setAddress(rs.getString("address"));
+				u.setPassword(rs.getString("password"));
 
 				list.add(u);
 			}
