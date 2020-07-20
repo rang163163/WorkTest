@@ -1,5 +1,6 @@
-package admin1;
-
+package test;
+import util.*;
+import mainpanel.*;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,10 +15,10 @@ import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import admin.ShowTimeApp.ShowTime;
-
 public class Test1 extends JFrame{
 public static void main(String[] args) {
+	JFrame j1=new JFrame();
+	j1.setSize(500, 300);
 	new Test1();
 	//new Test2().t();
 	
